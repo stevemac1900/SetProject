@@ -3,18 +3,7 @@ public class Table{
   private int length = 0;
   
   public Table() {
-    Deck d = new Deck();
-    
-    if (d.cards.size() >= 12) {
-      for (int i = 0; i < 12; i ++){
-        add(d.getNext());
-      }
-    }
-    else {
-      for (int i = 0; i < d.cards.size(); i++) {
-        add(d.getNext());
-      }
-    }
+    head = null;
   }
   
   public void add(Card c1) {
