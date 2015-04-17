@@ -61,13 +61,15 @@ public class Deck {
   }
   
   public boolean hasNext() {
-    if (nextCardIndex > cards.size())
+    if (nextCardIndex >= cards.size())
       return false;
     else
       return true;
   }
   
   public Card getNext() {
+    if (cards.size() == 1)
+      return cards.get(1);
     if (hasNext() == false)
       return null;
     else {

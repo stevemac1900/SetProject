@@ -1,6 +1,5 @@
 public class Table{
   private TableNode head;
-  private int length = 0;
   
   public Table() {
     head = null;
@@ -8,8 +7,6 @@ public class Table{
   
   public void add(Card c1) {
     TableNode newNode = new TableNode(c1);
-    
-    length ++;
     
     if (head == null) 
       head = newNode;
@@ -21,7 +18,7 @@ public class Table{
   }
   
   public void removeSet(Card c1, Card c2, Card c3) {
-    if (length < 3)
+    if (numCards() < 3)
       return;
     
     if (c1.isSet(c2,c3) == false)
@@ -59,9 +56,8 @@ public class Table{
     
     while (headChanges < 3 && head != null) {
       for (int i = 0; i < 3; i ++) {
-        if (card[i] == head.getCard()) {
+        if (card[i].equals(head.getCard())) {
           head = head.getNext();
-          length -= 1;
           headChanges += 1;
           if (headChanges >= 3)
             return;
@@ -69,7 +65,7 @@ public class Table{
       }
     }
     
-    if (length < 3)
+    if (numCards() < 3)
       return;
     
     prev = head;
@@ -79,7 +75,7 @@ public class Table{
     while (next != null) {
       boolean changed = false;
       for (int i = 0; i < 3; i ++) {
-        if (changed == false && node[i] == curr) {
+        if (changed == false && node[i].equals(curr)) {
           prev.setNext(next);
           changed = true;
         }
@@ -91,16 +87,14 @@ public class Table{
     }
     
     curr = head;
-    for(int i = 0; i < length - 1; i++) {
+    for(int i = 0; i < numCards() - 1; i++) {
       curr = curr.getNext();
     }
     curr.setNext(null);
-    
-    length -= 3;
   }
   
   public Card getCard(int cardIndex) {
-    if (cardIndex >= length)
+    if (cardIndex >= numCards())
       return null;
     
     TableNode curr = head;
@@ -112,13 +106,19 @@ public class Table{
   }
 
   public int numCards() {
-    return length;
+    int cards = 0;
+    TableNode curr = head;
+    while (curr != null) {
+        cards += 1;
+        curr = curr.getNext();
+    }
+    return cards;
   }
   
   public int numSets() {
     int sets = 0;
     
-    if (length < 3)
+    if (numCards() < 3)
       return sets;
     
     TableNode n1 = head;
