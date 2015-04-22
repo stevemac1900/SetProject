@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Deck {
   //Deck d = new Deck();
-  private int nextCardIndex = 1;
+  private int nextCardIndex = 0;
   public ArrayList<Card> cards;
   
   public Deck() {
@@ -68,8 +68,6 @@ public class Deck {
   }
   
   public Card getNext() {
-    if (cards.size() == 1)
-      return cards.get(1);
     if (hasNext() == false)
       return null;
     else {
