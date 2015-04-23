@@ -18,6 +18,9 @@ public class Table{
   }
   
   public void removeSet(Card c1, Card c2, Card c3) {
+    if (head == null)
+      return;
+    
     if (numCards() < 3)
       return;
     
@@ -28,8 +31,8 @@ public class Table{
     TableNode n1 = null;
     TableNode n2 = null;
     TableNode n3 = null;
-    TableNode[] placeHolder = new TableNode[]{n1,n2,n3};
-    Card[] card = new Card[] {c1,c2,c3};
+    TableNode[] placeHolder = {n1,n2,n3};
+    Card[] card = {c1,c2,c3};
     
     int placeHolderIndex = 0;
     
@@ -48,27 +51,29 @@ public class Table{
          return;
      }
      
-     int headChanges = 0;
+     int removals = 0;
      
-     while (headChanges < 3 && head != null) {
-       for (int i = 0; i < 3; i ++) {
+     while (removals < 3 && head != null) {
+       for (int i = 0; i < 3 && head != null; i ++) {
          if(card[i].equals(head.getCard())) {
            head = head.getNext();
-           headChanges ++;
+           removals ++;
          }
        }
      }
+     
+     if (head == null || removals >= 3)
+      return;
      
      TableNode prev = head;
      TableNode curr = prev.getNext();
      TableNode next = curr.getNext();
      
      while (next != null) {
-       boolean changed = false;
        for (int i = 0; i < 3; i ++) {
-         if (changed == false && placeHolder[i].equals(curr)) {
+         if (removals < 3 && placeHolder[i] == curr) {
            prev.setNext(next);
-           changed = true;
+           removals ++;
          }
          else
            prev = prev.getNext();
@@ -76,13 +81,6 @@ public class Table{
        curr = curr.getNext();
        next = next.getNext();
      }
-     
-     curr = head;
-     
-     for (int i = 0; i < numCards() - 1; i++) {
-       curr = curr.getNext();
-     }
-     curr.setNext(null);
   }
 
   public Card getCard(int cardIndex) {
