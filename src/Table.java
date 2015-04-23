@@ -28,10 +28,7 @@ public class Table{
       return;
     
     TableNode temp = head;
-    TableNode n1 = null;
-    TableNode n2 = null;
-    TableNode n3 = null;
-    TableNode[] placeHolder = {n1,n2,n3};
+    TableNode[] placeHolder = {null,null,null};
     Card[] card = {c1,c2,c3};
     
     int placeHolderIndex = 0;
@@ -53,7 +50,7 @@ public class Table{
      
      int removals = 0;
      
-     while (removals < 3 && head != null) {
+     for (int j = 0; j < 3 && removals < 3 && head != null; j ++) {
        for (int i = 0; i < 3 && head != null; i ++) {
          if(card[i].equals(head.getCard())) {
            head = head.getNext();
@@ -67,19 +64,20 @@ public class Table{
      
      TableNode prev = head;
      TableNode curr = prev.getNext();
-     TableNode next = curr.getNext();
      
-     while (next != null) {
-       for (int i = 0; i < 3; i ++) {
+     while (curr != null) {
+       for (int i = 0; i < 3 && curr != null; i ++) {
          if (removals < 3 && placeHolder[i] == curr) {
-           prev.setNext(next);
+           prev.setNext(curr.getNext());
+           curr = prev.getNext();
            removals ++;
          }
-         else
-           prev = prev.getNext();
        }
-       curr = curr.getNext();
-       next = next.getNext();
+       
+       if (curr != null) {
+         prev = prev.getNext();
+         curr = curr.getNext();
+       }
      }
   }
 
