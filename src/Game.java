@@ -35,6 +35,12 @@ public class Game {
       return;
     }
     
+    if (numSets() == 0) {
+      for (int i = 0; i < 3 && d.hasNext() == true; i ++)
+        t.add(d.getNext());
+      return;
+    }
+    
     if (numCards() <= 12 && numSets() > 0) {
       for (int i = 0; i < numCards(); i ++) {
         Card c1 = t.getCard(i);
